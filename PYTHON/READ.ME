@@ -1,1 +1,24 @@
-RE
+2466. Count Ways To Build Good Strings 
+# Approach:
+This problem can be solved using Dynamic Programming.
+We can define a 2D DP table dp[i][j], where i is the length of the string and j is the number of ones in the string.
+Base case: dp[0][0] = 1, as an empty string with zero ones is a valid good string.
+Recurrence relation: dp[i][j] = dp[i-1][j] + dp[i-1][j-1], which means we can either append a zero or a one.
+For each length i and number of ones j, we need to compute dp[i][j] by summing up the two possibilities: appending a zero or appending a one.
+Finally, we need to sum up all dp[i][j] where low <= i <= high and 0 <= j <= i.
+Algorithm:
+
+Initialize a 2D DP table dp with dimensions (high+1) x (high+1).
+Initialize dp[0][0] = 1.
+For i from 1 to high:
+a. For j from 0 to i:
+i. If j == 0, dp[i][j] = dp[i-1][j] (we can only append zero).
+ii. If j == i, dp[i][j] = dp[i-1][j-1] (we can only append one).
+iii. Otherwise, dp[i][j] = dp[i-1][j] + dp[i-1][j-1] (we can append either zero or one).
+Initialize a variable ans to 0.
+For i from low to high:
+a. For j from 0 to i:
+i. If j <= one and i-j <= zero, add dp[i][j] to ans.
+Return ans % (10^9 + 7).
+Time Complexity: O(high^2)
+Space Complexity: O(high^2)
